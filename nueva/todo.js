@@ -1,6 +1,4 @@
-
-      
-        var input = document.getElementById("datos");
+var input = document.getElementById("datos");
         var addBtn = document.getElementById("btn1");
         var div = document.getElementById("dv");
 

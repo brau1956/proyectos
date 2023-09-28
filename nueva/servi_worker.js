@@ -1,12 +1,11 @@
-
 const CACHE_NAME = 'mi-cache';
 
-// Define las librerías (debes añadir el signo igual)
+
 const archivosParaCache = [
-    '/proyecto.html',
-    '/estilo.css',
-    '/todo.js',
-    '/h'
+    './proyecto.html',
+    './estilo.css',
+    './todo.js',
+    './manifest.json' 
 ];
 
 // Evento de instalación del Service Worker
@@ -45,8 +44,18 @@ self.addEventListener('fetch', function(event) {
         if (response) {
           return response;
         }
-        // Si no se encuentra en caché, realiza la solicitud a la red
-        return fetch(event.request);
+        // Si no se encuentra en caché, realiza la solicitud a la red y almacena en caché la respuesta
+        return fetch(event.request).then(function(response) {
+          // Comprueba si la respuesta es válida antes de almacenarla en caché
+          if (!response || response.status !== 200 || response.type !== 'basic') {
+            return response;
+          }
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(event.request, responseToCache);
+          });
+          return response;
+        });
       })
   );
 });
