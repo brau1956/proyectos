@@ -2,7 +2,7 @@ const CACHE_NAME = 'mi-cache';
 
 
 const archivosParaCache = [
-    './proyecto.html',
+    './index.html',
     './estilo.css',
     './todo.js',
     './manifest.json' 
